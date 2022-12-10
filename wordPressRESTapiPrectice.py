@@ -10,7 +10,8 @@ datas = r.json()
 for data in datas:
     urls = data.get('link')
     title = data.get('title').get('rendered')
-    print(urls,title)
+    statuses = data.get('status')
+    print('status: ',statuses,'url: ',urls,'Title:',title)
 
-    
+
 # pprint.pprint(r.json())
