@@ -11,7 +11,13 @@ for data in datas:
     urls = data.get('link')
     title = data.get('title').get('rendered')
     statuses = data.get('status')
-    print('status: ',statuses,'url: ',urls,'Title:',title)
+    # print('status: ',statuses,'url: ',urls,'Title:',title)
+
+    #write to local file
+    text = f'{statuses}:\n{urls}\n\nTitle: {title}\n\n'
+    file = open('urls dara.txt','a+')
+    file.writelines(text+'\n')
+    file.close()
+    print('success')
 
 
-# pprint.pprint(r.json())
