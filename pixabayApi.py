@@ -25,6 +25,10 @@ if image_match >0:
         # print(image_id)
         webformatURL= hit.get('webformatURL')
         print(webformatURL)
+
+        file = open('pixabay urls.txt','a+')
+        file.writelines(webformatURL+'\n\n')
+        file.close()
 else:
     print('No image found')
 
