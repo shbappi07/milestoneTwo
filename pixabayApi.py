@@ -26,7 +26,7 @@ if image_match >0:
         webformatURL= hit.get('webformatURL')
         print(webformatURL)
 
-        file = open('pixabay urls.txt','a+')
+        file = open('pixabayUrls.txt','a+')
         file.writelines(webformatURL+'\n\n')
         file.close()
 else:
