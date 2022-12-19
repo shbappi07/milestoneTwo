@@ -1,13 +1,19 @@
 import json
-
 import httpx
-from pprint import pprint
-api_url = 'https://mobile-phone-server.vercel.app/phones'
+import base64
 
+
+api_url = 'https://mobile-phone-server.vercel.app/phones'
 r = httpx.get(api_url)
 data = r.json()
-
 get_records = data.get('RECORDS')
+
+wp_user = 'shbappi07'
+wp_pass = 'Nme3 8kLk jKuQ cNUn 1KTF 1I1d'
+wp_credential = f'{wp_user}:{wp_pass}'
+wp_token = base64.b64encode(wp_credential.encode())
+wp_header = {'Authorization':f'Basic {wp_token.decode("utf-8")}'}
+
 
 def wp_feature_image(img_src,phone_name):
     code = f'<!-- wp:image {{"align":"center","sizeSlug":"large"}} --><figure class="wp-block-image aligncenter size-large"><img src="{img_src}" alt="{phone_name} image"/><figcaption class="wp-element-caption">{phone_name}</figcaption></figure><!-- /wp:image -->'
@@ -32,6 +38,22 @@ def concatenate_string(*args):
     for arg in args:
         final += arg
     return final
+
+def slugify(name):
+    code = name.strip().replace(' ', '-')
+    return code
+def wp_post(title,content,slug):
+    wp_api_url = 'https://localhost/mobile/wp-json/wp/v2/posts'
+    data = {
+        'title': title,
+        'content': content,
+        'slug': slug,
+        'status': "publish"
+    }
+    resposne = httpx.post(wp_api_url,headers=wp_header, json=data, verify=False)
+
+    print(f'{name} is published')
+    # return upload_content
 
 
 for phone in get_records:
@@ -69,7 +91,10 @@ for phone in get_records:
     specifications = json.loads(specifications_data)
     specification_table = wp_dictionary_table(specifications)
 
-    content = concatenate_string(main_para,main_img,h2,overview_table,second_heading,specification_table)
-    print(content)
+    content = concatenate_string(main_para,main_img,h2,overview_table,second_heading,specification_table,intro_paragraph)
+    slug = slugify(name)
+
+    wp_post(name,content,slug,)
+
 
 # start from 114
